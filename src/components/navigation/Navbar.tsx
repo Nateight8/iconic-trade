@@ -3,8 +3,9 @@
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/Button";
+import { Rotate as Hamburger } from "hamburger-react";
 
 type Props = {};
 
@@ -36,6 +37,7 @@ function Navbar({}: Props) {
   const router = useRouter();
 
   console.log(router);
+  const [open, setopen] = useState(false);
 
   return (
     <>
@@ -115,6 +117,66 @@ function Navbar({}: Props) {
               })}
             </ul>
           </div>
+          <button
+            onClick={() => {
+              setopen(!open);
+            }}
+            className="md:hidden  z-50"
+          >
+            <Hamburger rounded color="white" />
+          </button>
+        </div>
+
+        {/* navbar drawer */}
+        <div
+          style={
+            open
+              ? { transform: "translateX(0%)" }
+              : { transform: "translateX(-100%)" }
+          }
+          id="drawer-example"
+          className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+          tabIndex={-1}
+          aria-labelledby="drawer-label"
+        >
+          {session ? (
+            <button
+              onClick={handleSignOut}
+              style={path === "/sign-up" ? {} : {}}
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Log out
+            </button>
+          ) : (
+            <>
+              <Button
+                style={
+                  path === "/sign-in"
+                    ? { color: "#2563eb" }
+                    : { color: "white" }
+                }
+                onClick={() => {
+                  router.push("/sign-in");
+                }}
+                variant="ghost"
+              >
+                Sign in
+              </Button>
+              <Button
+                style={
+                  path === "/sign-up"
+                    ? { color: "#2563eb" }
+                    : { color: "white" }
+                }
+                onClick={() => {
+                  router.push("/sign-up");
+                }}
+                variant="subtle"
+              >
+                Sign up
+              </Button>
+            </>
+          )}
         </div>
       </nav>
     </>
