@@ -36,7 +36,6 @@ function Navbar({}: Props) {
 
   const router = useRouter();
 
-  console.log(router);
   const [open, setopen] = useState(false);
 
   return (
@@ -121,7 +120,7 @@ function Navbar({}: Props) {
             onClick={() => {
               setopen(!open);
             }}
-            className="md:hidden  z-50"
+            className="md:hidden  z-30"
           >
             <Hamburger rounded color="white" />
           </button>
@@ -139,44 +138,52 @@ function Navbar({}: Props) {
           tabIndex={-1}
           aria-labelledby="drawer-label"
         >
-          {session ? (
-            <button
-              onClick={handleSignOut}
-              style={path === "/sign-up" ? {} : {}}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Log out
-            </button>
-          ) : (
-            <>
-              <Button
-                style={
-                  path === "/sign-in"
-                    ? { color: "#2563eb" }
-                    : { color: "white" }
-                }
-                onClick={() => {
-                  router.push("/sign-in");
-                }}
-                variant="ghost"
-              >
-                Sign in
-              </Button>
-              <Button
-                style={
-                  path === "/sign-up"
-                    ? { color: "#2563eb" }
-                    : { color: "white" }
-                }
-                onClick={() => {
-                  router.push("/sign-up");
-                }}
-                variant="subtle"
-              >
-                Sign up
-              </Button>
-            </>
-          )}
+          <div className="py-4">
+            <h3 className="text-slate-200 text-lg font-bold">
+              iconic<span className="font-normal ml-1">trade</span>
+            </h3>
+          </div>
+          <div className="bg-slate-700 h-px w-full" />
+
+          <div className="py-4 overflow-y-auto">
+            <ul className="space-y-2 font-medium">
+              {navLinks.map((alink) => {
+                const { url, link, id } = alink;
+
+                return (
+                  <li key={id}>
+                    <Link
+                      onClick={() => {
+                        setopen(false);
+                      }}
+                      style={
+                        path === url ? { color: "#2563eb" } : { color: "white" }
+                      }
+                      href={url}
+                      className="block py-2 pr-4 bg-transparent text-white md:p-0"
+                      aria-current="page"
+                    >
+                      {link}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li>
+                <Link
+                  style={
+                    path === "/sign-in"
+                      ? { color: "#2563eb" }
+                      : { color: "white" }
+                  }
+                  href={"/sign-in"}
+                  className="block py-2 pr-4 bg-transparent text-white md:p-0"
+                  aria-current="page"
+                >
+                  Sign in
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </>
@@ -184,3 +191,42 @@ function Navbar({}: Props) {
 }
 
 export default Navbar;
+
+// {session ? (
+//   <button
+//     onClick={handleSignOut}
+//     style={path === "/sign-up" ? {} : {}}
+//     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+//   >
+//     Log out
+//   </button>
+// ) : (
+//   <>
+//     <Button
+//       style={
+//         path === "/sign-in"
+//           ? { color: "#2563eb" }
+//           : { color: "white" }
+//       }
+//       onClick={() => {
+//         router.push("/sign-in");
+//       }}
+//       variant="ghost"
+//     >
+//       Sign in
+//     </Button>
+//     <Button
+//       style={
+//         path === "/sign-up"
+//           ? { color: "#2563eb" }
+//           : { color: "white" }
+//       }
+//       onClick={() => {
+//         router.push("/sign-up");
+//       }}
+//       variant="subtle"
+//     >
+//       Sign up
+//     </Button>
+//   </>
+// )}

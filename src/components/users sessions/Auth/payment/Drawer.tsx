@@ -17,7 +17,7 @@ function Drawer({ handleClose, open }: Props) {
             : { transform: "translateY(100%)" }
         }
         id="drawer-bottom-example"
-        className="fixed bottom-0 left-0 right-0 z-40 w-full p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none"
+        className="fixed bottom-0 left-0 right-0 z-50 w-full p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 transform-none"
         tabIndex={-1}
         aria-labelledby="drawer-bottom-label"
       >
@@ -33,7 +33,6 @@ function Drawer({ handleClose, open }: Props) {
             className="w-5 h-5"
             fill="currentColor"
             viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               fill-rule="evenodd"
@@ -63,7 +62,7 @@ function Drawer({ handleClose, open }: Props) {
             ? { transform: "translateY(0%)" }
             : { transform: "translateY(100%)" }
         }
-        className="absolute inset-0 bg-slate-900/20 z-10"
+        className="absolute inset-0 bg-slate-900/20 z-40"
       />
     </>
   );

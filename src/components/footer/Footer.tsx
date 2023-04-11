@@ -73,16 +73,16 @@ function Footer({}: Props) {
   const { data: session } = useSession();
   const path = usePathname();
   return (
-    <footer className="bg-white dark:bg-gray-900 mt-9">
+    <footer className="bg-white dark:bg-gray-900 mt-9 fixed bottom-0 left-0 right-0">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         {!session ? null : path === "sign-in" || path === "sign-out" ? null : (
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">
-              <a href="https://flowbite.com/" className="flex items-center">
+              <p className="flex items-center">
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                   Iconic Trade
                 </span>
-              </a>
+              </p>
             </div>
             <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
               <div>
