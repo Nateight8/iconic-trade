@@ -1,5 +1,8 @@
 import React from "react";
 import Panel from "./Panel";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "@/components/redux/store";
+import Link from "next/link";
 
 type Props = {};
 
@@ -11,8 +14,32 @@ function Overview({}: Props) {
     seconds: 0,
   });
 
+  const { date } = useAppSelector((store) => {
+    return store.packageReducer;
+  });
+
+  const currentTimestamp = Date.now();
+  const millisecondsIn30Days = date * 24 * 60 * 60 * 1000;
+  const timestampInDays = currentTimestamp + millisecondsIn30Days;
+
   React.useEffect(() => {
-    const targetDate = new Date("2023-05-01T00:00:00.000Z");
+    // formatter function
+    function formatTimestamp(timestamp: number) {
+      const date = new Date(timestamp);
+      const year = date.getUTCFullYear();
+      const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(date.getUTCDate()).padStart(2, "0");
+      const hours = String(date.getUTCHours()).padStart(2, "0");
+      const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+      const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+      const milliseconds = String(date.getUTCMilliseconds()).padStart(3, "0");
+
+      return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+    }
+
+    const timestamp = timestampInDays;
+    const formatted = formatTimestamp(timestamp);
+    const targetDate = new Date(formatted);
 
     const intervalId = setInterval(() => {
       const now = new Date().getTime();
@@ -31,69 +58,86 @@ function Overview({}: Props) {
 
   return (
     <div className="py-5 w-full">
-      <div className="pb-3">
-        <h1 className="font-bold text-lg text-slate-200 capitalize pb-3">
-          Cash Drop{" "}
-        </h1>
-        <p className="text-sm text-slate-300">
-          Count down to your next investment payout. Get ready to celebrate the
-          arrival of your profit
-        </p>
-      </div>
-      <div className="grid grid-cols-4 gap-2">
-        {/* day */}
-        <div className="w-full rounded-md  overflow-hidden border border-slate-700">
-          <div className="bg-slate-700 py-2">
-            <h3 className="text-4xl text-slate-200 text-center font-bold">
-              {remainingTime.days}
-            </h3>
-          </div>
-          <div className="bg-slate-800">
-            <p className="text-slate-300 uppercase text-sm text-center py-1">
-              days
+      {date === 0 ? (
+        <div className="text-white">
+          <p className="max-w-lg mb-6 text-sm text-slate-400">
+            You are yet to activate a plan. Go to
+            <Link
+              href="/"
+              className="text-blue-600 underline ml-1 font-medium dark:text-blue-500 hover:no-underline mr-1"
+            >
+              iconicTrade Home
+            </Link>
+            and choose a plan
+          </p>
+        </div>
+      ) : (
+        <>
+          <div className="pb-3">
+            <h1 className="font-bold text-lg text-slate-200 capitalize pb-3">
+              Cash Drop{" "}
+            </h1>
+            <p className="text-sm text-slate-300">
+              Count down to your next investment payout. Get ready to celebrate
+              the arrival of your profit
             </p>
           </div>
-        </div>
-        {/* hours */}
-        <div className="w-full rounded-md  overflow-hidden border border-slate-700">
-          <div className="bg-slate-700 py-2">
-            <h3 className="text-4xl text-slate-200 text-center font-bold">
-              {remainingTime.hours}
-            </h3>
+          <div className="grid grid-cols-4 gap-2 max-w-lg">
+            {/* day */}
+            <div className="w-full rounded-md  overflow-hidden border border-slate-700">
+              <div className="bg-slate-700 py-2">
+                <h3 className="text-4xl text-slate-200 text-center font-bold">
+                  {remainingTime.days}
+                </h3>
+              </div>
+              <div className="bg-slate-800">
+                <p className="text-slate-300 uppercase text-sm text-center py-1">
+                  days
+                </p>
+              </div>
+            </div>
+            {/* hours */}
+            <div className="w-full rounded-md  overflow-hidden border border-slate-700">
+              <div className="bg-slate-700 py-2">
+                <h3 className="text-4xl text-slate-200 text-center font-bold">
+                  {remainingTime.hours}
+                </h3>
+              </div>
+              <div className="bg-slate-800">
+                <p className="text-slate-300 uppercase text-sm text-center py-1">
+                  hours
+                </p>
+              </div>
+            </div>
+            {/* mins */}
+            <div className="w-full rounded-md  overflow-hidden border border-slate-700">
+              <div className="bg-slate-700 py-2">
+                <h3 className="text-4xl text-slate-200 text-center font-bold">
+                  {remainingTime.minutes}
+                </h3>
+              </div>
+              <div className="bg-slate-800">
+                <p className="text-slate-300 uppercase text-sm text-center py-1">
+                  mins
+                </p>
+              </div>
+            </div>
+            {/* sec */}
+            <div className="w-full rounded-md  overflow-hidden border border-slate-700">
+              <div className="bg-slate-700 py-2">
+                <h3 className="text-4xl text-slate-200 text-center font-bold">
+                  {remainingTime.seconds}
+                </h3>
+              </div>
+              <div className="bg-slate-800">
+                <p className="text-slate-300 uppercase text-sm text-center py-1">
+                  seconds
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-slate-800">
-            <p className="text-slate-300 uppercase text-sm text-center py-1">
-              hours
-            </p>
-          </div>
-        </div>
-        {/* mins */}
-        <div className="w-full rounded-md  overflow-hidden border border-slate-700">
-          <div className="bg-slate-700 py-2">
-            <h3 className="text-4xl text-slate-200 text-center font-bold">
-              {remainingTime.minutes}
-            </h3>
-          </div>
-          <div className="bg-slate-800">
-            <p className="text-slate-300 uppercase text-sm text-center py-1">
-              mins
-            </p>
-          </div>
-        </div>
-        {/* sec */}
-        <div className="w-full rounded-md  overflow-hidden border border-slate-700">
-          <div className="bg-slate-700 py-2">
-            <h3 className="text-4xl text-slate-200 text-center font-bold">
-              {remainingTime.seconds}
-            </h3>
-          </div>
-          <div className="bg-slate-800">
-            <p className="text-slate-300 uppercase text-sm text-center py-1">
-              seconds
-            </p>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

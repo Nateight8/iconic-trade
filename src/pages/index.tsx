@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className=" min-h-screen  mx-auto ">
-      {!session ? <AuthUser /> : <Guest />}
+      {session ? <AuthUser /> : <Guest />}
     </main>
   );
 }

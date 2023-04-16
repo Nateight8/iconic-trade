@@ -18,7 +18,7 @@ function Payment({}: Props) {
         <div className="gap-2 grid grid-cols-2">
           <Button
             size="sm"
-            variant="outline"
+            variant="ghost"
             // onClick={() => {
             //   setopen(true);
             // }}

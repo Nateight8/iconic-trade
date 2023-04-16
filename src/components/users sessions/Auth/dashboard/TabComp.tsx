@@ -25,12 +25,12 @@ function TabComp({}: Props) {
             Make changes to your account here. Click save when you&apos;re done.
           </p>
         </TabsContent>
-
+        {/* 
         <TabsContent value="security">
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Change your security here. After saving, you&apos;ll be logged out.
           </p>
-        </TabsContent>
+        </TabsContent> */}
 
         <TabsContent value="payment">
           {/* <p className="text-sm text-slate-500 dark:text-slate-400">

@@ -17,14 +17,19 @@ function Navbar({}: Props) {
       id: "1",
     },
     {
+      url: "/dashboard",
+      link: "Dashboard",
+      id: "2",
+    },
+    {
       url: "/about",
       link: "About",
-      id: "2",
+      id: "3",
     },
     {
       url: "/more",
       link: "More nav",
-      id: "3",
+      id: "4",
     },
   ];
   const path = usePathname();
@@ -40,24 +45,24 @@ function Navbar({}: Props) {
 
   return (
     <>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <nav className=" border-gray-200 bg-gray-900 sticky top-0 left-0 right-0 z-40">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="https://flowbite.com/" className="flex items-center">
-            <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <Link href="/" className="flex items-center">
+            <span className="self-center text-xl font-semibold whitespace-nowrap text-slate-200">
               <p>
                 iconic<span className="font-light">trades</span>
               </p>
             </span>
-          </a>
+          </Link>
           <div className="md:flex md:order-2 items-center md:space-x-8 hidden">
             {session ? (
-              <button
+              <Button
                 onClick={handleSignOut}
                 style={path === "/sign-up" ? {} : {}}
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                // className="text-white  hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
               >
                 Log out
-              </button>
+              </Button>
             ) : (
               <>
                 <Button
@@ -75,14 +80,11 @@ function Navbar({}: Props) {
                 </Button>
                 <Button
                   style={
-                    path === "/sign-up"
-                      ? { color: "#2563eb" }
-                      : { color: "white" }
+                    path === "/sign-up" ? { color: "#2563eb" } : { color: "" }
                   }
                   onClick={() => {
                     router.push("/sign-up");
                   }}
-                  variant="subtle"
                 >
                   Sign up
                 </Button>
@@ -95,7 +97,7 @@ function Navbar({}: Props) {
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-cta"
           >
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-900  border-gray-700">
               {navLinks.map((alink) => {
                 const { url, link, id } = alink;
 
@@ -134,7 +136,7 @@ function Navbar({}: Props) {
               : { transform: "translateX(-100%)" }
           }
           id="drawer-example"
-          className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+          className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full w-[85vw] bg-gray-800"
           tabIndex={-1}
           aria-labelledby="drawer-label"
         >
@@ -196,7 +198,7 @@ export default Navbar;
 //   <button
 //     onClick={handleSignOut}
 //     style={path === "/sign-up" ? {} : {}}
-//     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+//     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
 //   >
 //     Log out
 //   </button>
