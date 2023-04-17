@@ -12,7 +12,6 @@ import { Field, Form, Formik } from "formik";
 import Link from "next/link";
 import React, { useState } from "react";
 import { usePaystackPayment } from "react-paystack";
-import SelectX from "./SelectX";
 
 type Props = {
   handleStep: () => void;

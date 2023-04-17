@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
 import Modal from "./Modal";
 import Drawer from "./Drawer";
-import { SheetPosition } from "./Test";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 
 type Props = {};
