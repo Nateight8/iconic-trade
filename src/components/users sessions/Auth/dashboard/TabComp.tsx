@@ -3,8 +3,6 @@ import { TabsContent } from "@radix-ui/react-tabs";
 import React from "react";
 import Payment from "../payment/Payment";
 import Overview from "../overview/Overview";
-import PlanOptions from "../payment/PlanOptions";
-import { SheetPosition } from "../payment/Test";
 import {
   Card,
   CardContent,
