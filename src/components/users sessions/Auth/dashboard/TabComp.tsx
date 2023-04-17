@@ -3,6 +3,26 @@ import { TabsContent } from "@radix-ui/react-tabs";
 import React from "react";
 import Payment from "../payment/Payment";
 import Overview from "../overview/Overview";
+import PlanOptions from "../payment/PlanOptions";
+import { SheetPosition } from "../payment/Test";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
+import { Label } from "@/components/ui/Label";
 
 type Props = {};
 
@@ -25,17 +45,8 @@ function TabComp({}: Props) {
             Make changes to your account here. Click save when you&apos;re done.
           </p>
         </TabsContent>
-        {/* 
-        <TabsContent value="security">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            Change your security here. After saving, you&apos;ll be logged out.
-          </p>
-        </TabsContent> */}
 
         <TabsContent value="payment">
-          {/* <p className="text-sm text-slate-500 dark:text-slate-400">
-            Make changes to your payment here. Click save when you&apos;re done.
-          </p> */}
           <Payment />
         </TabsContent>
       </Tabs>

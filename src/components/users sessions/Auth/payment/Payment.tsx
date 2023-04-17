@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
 import Modal from "./Modal";
 import Drawer from "./Drawer";
+import { SheetPosition } from "./Test";
+import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 
 type Props = {};
 
@@ -13,31 +15,36 @@ function Payment({}: Props) {
   };
 
   return (
-    <div className="py-5 ">
-      <div className="w-full flex justify-end  ">
-        <div className="gap-2 grid grid-cols-2">
-          <Button
-            size="sm"
-            variant="ghost"
-            // onClick={() => {
-            //   setopen(true);
-            // }}
-          >
-            Widraw
-          </Button>
-          <Button
-            size="sm"
-            onClick={() => {
-              setopen(true);
-            }}
-          >
-            Deposit
-          </Button>
-        </div>
-      </div>
+    <Sheet>
+      <div className="py-5 ">
+        <div className="w-full flex justify-end  ">
+          <div className="gap-2 grid grid-cols-2">
+            <Button
+              size="sm"
+              variant="ghost"
+              // onClick={() => {
+              //   setopen(true);
+              // }}
+            >
+              Widraw
+            </Button>
 
-      <Drawer handleClose={handleClose} open={open} />
-    </div>
+            <SheetTrigger asChild>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setopen(true);
+                }}
+              >
+                Deposit
+              </Button>
+            </SheetTrigger>
+          </div>
+        </div>
+        <Drawer />
+        {/* <Drawer handleClose={handleClose} open={open} /> */}
+      </div>
+    </Sheet>
   );
 }
 
