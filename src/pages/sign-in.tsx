@@ -1,17 +1,37 @@
 import LogLayout from "@/components/layout/LogLayout";
 import TextField from "@/components/ui/TextField";
 import { Formik, Form, Field } from "formik";
+import { useState } from "react";
 
 interface HomeProps {}
 
 const Home = () => {
   const initialValues = { eMail: "", password: "" };
+
+  const handleFormSubmit = async (formValues: any) => {
+    try {
+      const response = await fetch(
+        " https://iconic-trades-backend.herokuapp.com/api/v1/users/loginUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+        }
+      );
+    } catch (error) {
+      console.error("Error during sign up:", error);
+    }
+  };
+
   return (
     <LogLayout>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={(values, { resetForm }) => {
+          handleFormSubmit(values);
+          resetForm();
         }}
       >
         {() => {

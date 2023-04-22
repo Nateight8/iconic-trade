@@ -26,11 +26,6 @@ function Navbar({}: Props) {
       link: "About",
       id: "3",
     },
-    {
-      url: "/more",
-      link: "More nav",
-      id: "4",
-    },
   ];
   const path = usePathname();
   const { data: session } = useSession();

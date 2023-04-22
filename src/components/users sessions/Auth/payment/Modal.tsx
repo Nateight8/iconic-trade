@@ -1,3 +1,5 @@
+import { investmentLaps } from "@/components/redux/features/packageSlice";
+import { useAppDispatch } from "@/components/redux/store";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import {
@@ -8,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/Select";
 import TextField from "@/components/ui/TextField";
+import { paystackApi } from "@/components/utils/utils";
 import { Field, Form, Formik } from "formik";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -19,14 +22,23 @@ type Props = {
 };
 
 function Modal({ steps, handleStep }: Props) {
-  const [amount, setAmount] = useState<string>("");
-  const [values, setvalues] = useState();
   const [planChange, setChangeplan] = useState("");
 
+  const handlePlanChange = (selectedValue: string) => {
+    setChangeplan(selectedValue);
+  };
+
+  // formik initialValues
   const initialValues = {
     amount: "",
     plan: "",
   };
+
+  // PAYSTACK
+  interface FormValues {
+    plan: string;
+    amount: string;
+  }
 
   type PaymentReference = {
     reference: string;
@@ -36,36 +48,23 @@ function Modal({ steps, handleStep }: Props) {
     transaction: string;
   };
 
-  const onSuccess = (reference: PaymentReference) => {
-    console.log(reference);
-  };
+  // state
+  const [formValues, setformValues] = useState<FormValues>({
+    plan: "",
+    amount: "",
+  });
 
-  const onPaymentSuccess = () => {
-    alert("payment successful");
-  };
-
-  const onClose = () => {
-    console.log("closed");
-    alert("Do you want to exit payment?");
-  };
+  const amount = parseInt(formValues.amount);
 
   const config = {
-    reference: new Date().getTime().toString(),
-    //   email: session?.user?.email ?? "",
-    email: "mbaocha@yahoo.com",
-    amount: parseInt(amount) * 100,
-    publicKey: "pk_test_b4c92c66e786e81550970b0612644f065537f464",
+    reference: new Date().getTime(),
+    email: "user@example.com",
+    amount,
+    publicKey: paystackApi,
   };
 
   const initializePayment = usePaystackPayment(config);
 
-  console.log(parseInt(amount));
-
-  const handlePlanChange = (selectedValue: string) => {
-    // Handle plan change
-    setChangeplan(selectedValue);
-    // You can update the UI or perform other actions based on the selected value
-  };
   return (
     <div className="flex">
       <div className="">
@@ -73,16 +72,12 @@ function Modal({ steps, handleStep }: Props) {
           <Formik
             initialValues={initialValues}
             onSubmit={(values) => {
-              setAmount(values.amount);
-              initializePayment();
+              setformValues(values);
             }}
           >
-            {({ values, setFieldValue, handleSubmit }) => {
+            {() => {
               return (
-                <Form
-                  onSubmit={handleSubmit}
-                  className="w-full max-w max-w-lg "
-                >
+                <Form className="w-full max-w max-w-lg ">
                   {steps === 1 && (
                     <>
                       <div className="my-4 ">
@@ -94,7 +89,11 @@ function Modal({ steps, handleStep }: Props) {
                           />
                         </div>
                       </div>
-                      <Button className="w-full" onClick={handleStep}>
+                      <Button
+                        type="button"
+                        className="w-full"
+                        onClick={handleStep}
+                      >
                         Continue
                       </Button>
                     </>
@@ -141,7 +140,14 @@ function Modal({ steps, handleStep }: Props) {
                           );
                         }}
                       </Field>
-                      <Button className="w-full" type="submit">
+                      {/* submit btn */}
+                      <Button
+                        className="w-full"
+                        type="submit"
+                        onClick={() => {
+                          initializePayment();
+                        }}
+                      >
                         Proceed
                         <svg
                           className="w-4 h-4 ml-2"

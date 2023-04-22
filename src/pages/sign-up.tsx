@@ -3,6 +3,7 @@ import TextField from "@/components/ui/TextField";
 import validationSchema from "@/components/utils/validationSchema";
 import { Formik, Form, Field } from "formik";
 import Link from "next/link";
+import { useState } from "react";
 
 interface HomeProps {}
 
@@ -14,13 +15,30 @@ const Home = () => {
     password: "",
   };
 
+  const handleFormSubmit = async (formValues: any) => {
+    try {
+      const response = await fetch(
+        "https://iconic-trades-backend.herokuapp.com/api/v1/users/user",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formValues),
+        }
+      );
+    } catch (error) {
+      console.error("Error during sign up:", error);
+    }
+  };
+
   return (
     <LogLayout>
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-          console.log(values);
           resetForm();
+          handleFormSubmit(values);
         }}
         // validationSchema={validationSchema}
       >
@@ -29,10 +47,10 @@ const Home = () => {
             <Form className="w-full  ">
               <div className="my-7">
                 <div className="grid grid-cols-2 gap-x-4">
-                  <div className="relative z-0 w-full mb-4 group">
+                  <div className="relative z-0 w-full mb-4 group col-span-full md:col-span-1">
                     <Field name="firstName" label="First name" as={TextField} />
                   </div>
-                  <div className="relative z-0 w-full mb-4 group">
+                  <div className="relative z-0 w-full mb-4 group col-span-full md:col-span-1">
                     <Field name="lastName" label="Last name" as={TextField} />
                   </div>
                   <div className="relative z-0 w-full mb-4 group col-span-full">
