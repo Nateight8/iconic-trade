@@ -6,7 +6,7 @@ import { useState } from "react";
 interface HomeProps {}
 
 const Home = () => {
-  const initialValues = { eMail: "", password: "" };
+  const initialValues = { email: "", password: "" };
 
   const handleFormSubmit = async (formValues: any) => {
     try {
@@ -20,6 +20,16 @@ const Home = () => {
           body: JSON.stringify(formValues),
         }
       );
+
+      console.log(response);
+
+      // if (response.ok) {
+      //   const data = await response.json();
+      //   const authToken = data.authToken;
+      //   localStorage.setItem("sign in token", authToken);
+      // } else {
+      //   console.error("Error during sign up:", response);
+      // }
     } catch (error) {
       console.error("Error during sign up:", error);
     }
@@ -40,7 +50,7 @@ const Home = () => {
               <div className="my-7">
                 <div className="grid grid-cols-2 gap-x-4">
                   <div className="relative z-0 w-full mb-4 group col-span-full">
-                    <Field name="eMail" label="E-mail" as={TextField} />
+                    <Field name="email" label="E-mail" as={TextField} />
                   </div>
                   <div className="relative z-0 w-full mb-4 group col-span-full">
                     <Field name="password" label="Password" as={TextField} />

@@ -55,15 +55,17 @@ function Modal({ steps, handleStep }: Props) {
   });
 
   const amount = parseInt(formValues.amount);
-
+  console.log(amount);
   const config = {
     reference: new Date().getTime(),
     email: "user@example.com",
-    amount,
+    amount: amount * 100,
     publicKey: paystackApi,
   };
-
+  console.log("line 66:", amount);
   const initializePayment = usePaystackPayment(config);
+
+  console.log(config);
 
   return (
     <div className="flex">
@@ -73,6 +75,10 @@ function Modal({ steps, handleStep }: Props) {
             initialValues={initialValues}
             onSubmit={(values) => {
               setformValues(values);
+              initializePayment(
+                () => console.log("success"),
+                () => console.log("fail")
+              );
             }}
           >
             {() => {
@@ -144,9 +150,9 @@ function Modal({ steps, handleStep }: Props) {
                       <Button
                         className="w-full"
                         type="submit"
-                        onClick={() => {
-                          initializePayment();
-                        }}
+                        // onClick={() => {
+                        //   initializePayment();
+                        // }}
                       >
                         Proceed
                         <svg

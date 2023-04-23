@@ -11,7 +11,7 @@ const Home = () => {
   const initialValues = {
     firstName: "",
     lastName: "",
-    eMail: "",
+    email: "",
     password: "",
   };
 
@@ -54,7 +54,7 @@ const Home = () => {
                     <Field name="lastName" label="Last name" as={TextField} />
                   </div>
                   <div className="relative z-0 w-full mb-4 group col-span-full">
-                    <Field name="eMail" label="E-mail" as={TextField} />
+                    <Field name="email" label="E-mail" as={TextField} />
                   </div>
                   <div className="relative z-0 w-full mb-4 group col-span-full">
                     <Field name="password" label="Password" as={TextField} />
