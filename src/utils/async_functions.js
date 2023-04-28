@@ -53,8 +53,11 @@ export const auth = (type, data) => {
 
 export const makeRequest = async (url, data = {}, method) => {
   try {
-    console.log(method, method.toLowerCase());
-    console.log(url, data, method);
+    const token = JSON.parse(localStorage.getItem('user')).token;
+    if (!token) {
+      Router.push("/sign-in")
+      return;
+    }
     const temp = method.toLowerCase() === 'get' ? {
       method: method,
       headers: {
@@ -71,8 +74,11 @@ export const makeRequest = async (url, data = {}, method) => {
     };
     const request = await fetch(url, temp );
     const dt = await request.json();
-    console.log(dt);
-    // return data;
+    if (dt.status === 401) {
+      Router.push("/sign-in")
+      return;
+    }
+    return data;
   } catch (error) {
     console.log(error);
   }
