@@ -1,48 +1,76 @@
-// schema.js
-
-export const transaction = {
-  title: "Transaction",
-  name: "transaction",
+const product = {
+  name: "product",
+  title: "Product",
   type: "document",
   fields: [
     {
-      title: "Transaction ID",
-      name: "transactionId",
+      name: "title",
+      title: "Title",
       type: "string",
-      validation: (Rule) => Rule.required(),
+      description: "The title of the product",
     },
     {
-      title: "Amount",
-      name: "amount",
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "title",
+        maxLength: 96,
+      },
+      description: "The URL slug for the product",
+    },
+    {
+      name: "mainImage",
+      title: "Main Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      description: "The main image of the product",
+    },
+    {
+      name: "additionalImages",
+      title: "Additional Images",
+      type: "array",
+      of: [{ type: "image" }],
+      options: {
+        hotspot: true,
+      },
+      description:
+        "Additional images of the product to be displayed in a swiper",
+    },
+    {
+      name: "description",
+      title: "Description",
+      type: "array",
+      of: [{ type: "block" }],
+      description: "A brief description of the product",
+    },
+    {
+      name: "price",
+      title: "Price",
       type: "number",
-      validation: (Rule) => Rule.required(),
+      description: "The price of the product",
+    },
+
+    {
+      name: "features",
+      title: "Features",
+      type: "array",
+      of: [{ type: "string" }],
+      description: "Features or specifications of the product",
     },
     {
-      title: "Currency",
-      name: "currency",
-      type: "string",
+      name: "relatedProducts",
+      title: "Related Products",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "product" }] }],
       options: {
-        list: [
-          { title: "NGN", value: "NGN" },
-          { title: "USD", value: "USD" },
-          // Add more currency options as needed
-        ],
+        layout: "grid",
       },
-      validation: (Rule) => Rule.required(),
+      description: "Products related to this product",
     },
-    {
-      title: "Status",
-      name: "status",
-      type: "string",
-      options: {
-        list: [
-          { title: "Success", value: "success" },
-          { title: "Failure", value: "failure" },
-          // Add more status options as needed
-        ],
-      },
-      validation: (Rule) => Rule.required(),
-    },
-    // Add other relevant fields such as user ID, timestamp, etc. as needed
   ],
 };
+
+export default product;

@@ -1,38 +1,24 @@
 import LogLayout from "@/components/layout/LogLayout";
 import TextField from "@/components/ui/TextField";
 import { Formik, Form, Field } from "formik";
-import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 interface HomeProps {}
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const Home = () => {
   const initialValues = { email: "", password: "" };
 
-  const handleFormSubmit = async (formValues: any) => {
-    try {
-      const response = await fetch(
-        " https://iconic-trades-backend.herokuapp.com/api/v1/users/loginUser",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        }
-      );
-
-      console.log(response);
-
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   const authToken = data.authToken;
-      //   localStorage.setItem("sign in token", authToken);
-      // } else {
-      //   console.error("Error during sign up:", response);
-      // }
-    } catch (error) {
-      console.error("Error during sign up:", error);
-    }
+  const handleSignIn = async (formValue: FormValues) => {
+    const result = await signIn("credentials", {
+      username: formValue.email,
+      password: formValue.password,
+      redirect: true,
+      callbackUrl: "/",
+    });
   };
 
   return (
@@ -40,8 +26,8 @@ const Home = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-          handleFormSubmit(values);
           resetForm();
+          handleSignIn(values);
         }}
       >
         {() => {

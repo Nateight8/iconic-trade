@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { auth_url } from "../utils/utils";
 
@@ -7,8 +7,36 @@ type Props = {
 };
 
 function LogLayout({ children }: Props) {
+  const { data: session } = useSession();
+
+  const postRequest = async (userSession: any) => {
+    try {
+      const response = await fetch(
+        "https://iconic-trades-backend.herokuapp.com/api/v1/users/googleAuth",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userSession),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const authToken = data.authToken;
+        localStorage.setItem("sign in token", authToken);
+      } else {
+        console.error("Error during sign up:", response);
+      }
+    } catch (error) {
+      console.error("Error during sign up:", error);
+    }
+  };
+
   async function googleSignIn() {
     signIn("google", { callbackUrl: auth_url });
+    postRequest(session);
   }
   return (
     <div className="h-screen w-full flex items-center justify-center mx-auto p-4 flex-col relative">

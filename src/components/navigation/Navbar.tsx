@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -67,7 +67,7 @@ function Navbar({}: Props) {
                       : { color: "white" }
                   }
                   onClick={() => {
-                    router.push("/sign-in");
+                    signIn();
                   }}
                   variant="ghost"
                 >

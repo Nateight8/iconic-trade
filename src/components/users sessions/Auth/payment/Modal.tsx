@@ -13,7 +13,7 @@ import TextField from "@/components/ui/TextField";
 import { paystackApi } from "@/components/utils/utils";
 import { Field, Form, Formik } from "formik";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePaystackPayment } from "react-paystack";
 
 type Props = {
@@ -54,6 +54,13 @@ function Modal({ steps, handleStep }: Props) {
     amount: "",
   });
 
+  useEffect(() => {
+    initializePayment(
+      () => console.log(data),
+      () => console.log("success")
+    );
+  }, [formValues.amount]);
+
   const amount = parseInt(formValues.amount);
   console.log(amount);
   const config = {
@@ -61,11 +68,13 @@ function Modal({ steps, handleStep }: Props) {
     email: "user@example.com",
     amount: amount * 100,
     publicKey: paystackApi,
-  };
-  console.log("line 66:", amount);
-  const initializePayment = usePaystackPayment(config);
 
-  console.log(config);
+    metadata: {
+      plan: formValues.plan,
+    },
+  };
+
+  const initializePayment = usePaystackPayment(config);
 
   return (
     <div className="flex">
@@ -75,10 +84,6 @@ function Modal({ steps, handleStep }: Props) {
             initialValues={initialValues}
             onSubmit={(values) => {
               setformValues(values);
-              initializePayment(
-                () => console.log("success"),
-                () => console.log("fail")
-              );
             }}
           >
             {() => {

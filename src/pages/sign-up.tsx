@@ -27,6 +27,14 @@ const Home = () => {
           body: JSON.stringify(formValues),
         }
       );
+
+      if (response.ok) {
+        const data = await response.json();
+        const authToken = data.authToken;
+        localStorage.setItem("sign in token", authToken);
+      } else {
+        console.error("Error during sign up:", response);
+      }
     } catch (error) {
       console.error("Error during sign up:", error);
     }
