@@ -11,7 +11,7 @@ const authenticateUser = async (url, data, method) => {
       body: JSON.stringify(data)
     });
     const user = await request.json();
-    localStorage.setItem('user', { 'token': user.authToken, loggedIn: true });
+    localStorage.setItem('user', JSON.stringify({ 'token': user.authToken, loggedIn: true }));
     Router.push("/dashboard")
   } catch (error) {
     console.log(error);
@@ -51,16 +51,29 @@ export const auth = (type, data) => {
   }
 }
 
-const makeRequest = async (url, data, method) => {
-  const request = await fetch(url, {
-    method: method,
-    headers: {
-      "Content-Type": "application/json",
-      "x-access-token": localStorage.getItem('user').authToken
-  },
-    body: JSON.stringify(data)
-  });
-  const dt = await request.json();
-  console.log(dt);
-  // return data;
+export const makeRequest = async (url, data = {}, method) => {
+  try {
+    console.log(method, method.toLowerCase());
+    console.log(url, data, method);
+    const temp = method.toLowerCase() === 'get' ? {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": JSON.parse(localStorage.getItem('user')).token
+      }
+    } : {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": JSON.parse(localStorage.getItem('user')).token
+      },
+      body: JSON.stringify(data)
+    };
+    const request = await fetch(url, temp );
+    const dt = await request.json();
+    console.log(dt);
+    // return data;
+  } catch (error) {
+    console.log(error);
+  }
 }

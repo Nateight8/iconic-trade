@@ -16,6 +16,9 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePaystackPayment } from "react-paystack";
 
+import { makeRequest } from "../../../../utils/async_functions";
+import { endPoints } from "../../../../utils/urls"
+
 type Props = {
   handleStep: () => void;
   steps: number;
@@ -54,25 +57,29 @@ function Modal({ steps, handleStep }: Props) {
     amount: "",
   });
 
-  useEffect(() => {
-    initializePayment(
-      () => console.log(data),
-      () => console.log("success")
-    );
-  }, [formValues.amount]);
+  const verifyPayment = endPoints.verifyPayment;
 
-  const amount = parseInt(formValues.amount);
-  console.log(amount);
+  const newAmount = parseInt(formValues.amount);
+  // console.log(amount);
   const config = {
-    reference: new Date().getTime(),
+    reference: `${new Date().getTime()}`,
     email: "user@example.com",
-    amount: amount * 100,
+    amount: newAmount * 100,
     publicKey: paystackApi,
 
     metadata: {
       plan: formValues.plan,
     },
   };
+
+  useEffect(() => {
+    initializePayment(
+      () => {
+        makeRequest(verifyPayment.link, {reference: config.reference}, verifyPayment.method)
+      },
+      () => console.log("failed")
+    );
+  }, [formValues.amount]);
 
   const initializePayment = usePaystackPayment(config);
 

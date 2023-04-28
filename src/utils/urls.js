@@ -10,7 +10,7 @@ export const endPoints = {
   createAccount: {link: `${inUse}/users/user`, method: 'POST'},
   login: { link: `${inUse}/users/loginUser`, method: 'POST' },
   googleLogin: { link: `${inUse}/users/googleAuth`, method: 'POST' },
-  userSubscriptions: { link: `${inUse}/payments/userSubscriptions`, method: 'POST' },
+  userSubscriptions: { link: `${inUse}/payments/userSubscriptions`, method: 'GET' },
   verifyPayment: { link: `${inUse}/payments/verifyPayment`, method: 'POST' },
 };
 

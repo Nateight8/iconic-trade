@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Panel from "./Panel";
 import { useSelector } from "react-redux";
 import { useAppSelector } from "@/components/redux/store";
 import Link from "next/link";
+
+import { makeRequest } from "../../../../utils/async_functions";
+import { endPoints } from "../../../../utils/urls"
+
+const userSubscriptions = endPoints.userSubscriptions;
+
 
 type Props = {};
 
@@ -22,7 +28,7 @@ function Overview({}: Props) {
   const millisecondsIn30Days = date * 24 * 60 * 60 * 1000;
   const timestampInDays = currentTimestamp + millisecondsIn30Days;
 
-  React.useEffect(() => {
+  useEffect(() => {
     // formatter function
     function formatTimestamp(timestamp: number) {
       const date = new Date(timestamp);
@@ -54,6 +60,11 @@ function Overview({}: Props) {
     }, 1000);
 
     return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const subs = makeRequest(userSubscriptions.link, {}, userSubscriptions.method)
+    
   }, []);
 
   return (
