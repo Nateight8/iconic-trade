@@ -3,6 +3,8 @@ import TextField from "@/components/ui/TextField";
 import { Formik, Form, Field } from "formik";
 import { useState } from "react";
 
+import { auth } from "../utils/async_functions"
+
 interface HomeProps {}
 
 const Home = () => {
@@ -10,26 +12,9 @@ const Home = () => {
 
   const handleFormSubmit = async (formValues: any) => {
     try {
-      const response = await fetch(
-        " https://iconic-trades-backend.herokuapp.com/api/v1/users/loginUser",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        }
-      );
+      
+      auth('login', formValues)
 
-      console.log(response);
-
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   const authToken = data.authToken;
-      //   localStorage.setItem("sign in token", authToken);
-      // } else {
-      //   console.error("Error during sign up:", response);
-      // }
     } catch (error) {
       console.error("Error during sign up:", error);
     }

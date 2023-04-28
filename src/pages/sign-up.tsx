@@ -5,6 +5,8 @@ import { Formik, Form, Field } from "formik";
 import Link from "next/link";
 import { useState } from "react";
 
+import { auth } from '../utils/async_functions'
+
 interface HomeProps {}
 
 const Home = () => {
@@ -17,16 +19,8 @@ const Home = () => {
 
   const handleFormSubmit = async (formValues: any) => {
     try {
-      const response = await fetch(
-        "https://iconic-trades-backend.herokuapp.com/api/v1/users/user",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        }
-      );
+      auth('create_account', formValues)
+      
     } catch (error) {
       console.error("Error during sign up:", error);
     }
