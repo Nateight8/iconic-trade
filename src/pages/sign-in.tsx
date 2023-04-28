@@ -1,11 +1,15 @@
 import LogLayout from "@/components/layout/LogLayout";
 import TextField from "@/components/ui/TextField";
 import { Formik, Form, Field } from "formik";
-import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 import { auth } from "../utils/async_functions"
 
 interface HomeProps {}
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const Home = () => {
   const initialValues = { email: "", password: "" };
@@ -25,8 +29,8 @@ const Home = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-          handleFormSubmit(values);
           resetForm();
+          handleFormSubmit(values);
         }}
       >
         {() => {
