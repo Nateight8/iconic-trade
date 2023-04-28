@@ -31,8 +31,8 @@ const Home = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-          resetForm();
           handleFormSubmit(values);
+          resetForm();
         }}
         // validationSchema={validationSchema}
       >
