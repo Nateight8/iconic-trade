@@ -7,10 +7,13 @@ import {
     REGISTER_FAIL,
     REGISTER_SUCCESS,
     LOGIN_SUCCESS,
+    USER_LOADED,
     LOGIN_FAIL,
     LOGOUT,
     CLEAR_ERRORS
 } from '../types';
+
+import setAuthToken from '../../utils/setAuthToken';
 
 const AuthState = props => {
     const initialState = {
@@ -26,6 +29,17 @@ const AuthState = props => {
 
     const [state, dispatch] = useReducer(authReducer, initialState);
 
+    //load user
+    const loadUser = async () => {
+        // @todo -load token into global headers
+        if (localStorage.token) {
+            setAuthToken(localStorage.token)
+        }
+
+        dispatch({
+            type: USER_LOADED
+        })
+    };
     //register user
     const register = async formData => {
         const config = {
@@ -39,6 +53,8 @@ const AuthState = props => {
                 type: REGISTER_SUCCESS,
                 payload: res.data
             });
+
+            loadUser();
 
         } catch (err) {
             dispatch({
@@ -62,6 +78,8 @@ const AuthState = props => {
                 payload: res.data
             });
 
+            loadUser();
+
         } catch (err) {
             dispatch({
                 type: LOGIN_FAIL,
@@ -84,6 +102,7 @@ const AuthState = props => {
                 loading: state.loading,
                 user: state.user,
                 error: state.error,
+                loadUser,
                 register,
                 login,
                 logout,

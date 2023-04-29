@@ -1,3 +1,4 @@
+import { useContext } from "react";
 // import { investmentLaps } from "@/redux/features/packageSlice";
 // import { useAppDispatch } from "@/redux/store";
 import { Button } from "@/components/ui/Button";
@@ -16,8 +17,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePaystackPayment } from "react-paystack";
 
-import { makeRequest } from "../../../../utils/async_functions";
-import { endPoints } from "../../../../utils/urls"
+import subContext from "@/context/subscriptions/subContext";
 
 type Props = {
   handleStep: () => void;
@@ -26,6 +26,9 @@ type Props = {
 
 function Modal({ steps, handleStep }: Props) {
   const [planChange, setChangeplan] = useState("");
+
+  const SubContext = useContext(subContext);
+  const { verifyPayment } = SubContext;
 
   const handlePlanChange = (selectedValue: string) => {
     setChangeplan(selectedValue);
@@ -57,8 +60,6 @@ function Modal({ steps, handleStep }: Props) {
     amount: "",
   });
 
-  const verifyPayment = endPoints.verifyPayment;
-
   const newAmount = parseInt(formValues.amount);
   // console.log(amount);
   const config = {
@@ -75,7 +76,7 @@ function Modal({ steps, handleStep }: Props) {
   useEffect(() => {
     initializePayment(
       () => {
-        makeRequest(verifyPayment.link, {reference: config.reference}, verifyPayment.method)
+        verifyPayment(config)
       },
       () => console.log("failed")
     );
