@@ -70,6 +70,12 @@ function Modal({ steps, handleStep }: Props) {
 
     metadata: {
       plan: formValues.plan,
+      custom_fields:[
+        {
+          display_name:"plan",
+          variable_name:"plan",
+          value:formValues.plan
+        }]
     },
   };
 
