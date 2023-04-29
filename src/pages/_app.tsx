@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import Footer from "@/components/footer/Footer";
 import { Provider } from "react-redux";
-import { store } from "@/components/redux/store";
+import { store } from "@/redux/store";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

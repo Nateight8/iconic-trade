@@ -1,4 +1,4 @@
-import { investmentLaps } from "@/components/redux/features/packageSlice";
+import { investmentLaps } from "@/redux/features/packageSlice";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Panel from "./Panel";
 import { useSelector } from "react-redux";
-import { useAppSelector } from "@/components/redux/store";
+import { useAppSelector } from "@/redux/store";
 import Link from "next/link";
 
 import { makeRequest } from "../../../../utils/async_functions";
