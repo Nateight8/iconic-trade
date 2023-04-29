@@ -1,9 +1,11 @@
+import { useContext, useEffect } from "react";
 import LogLayout from "@/components/layout/LogLayout";
 import TextField from "@/components/ui/TextField";
 import { Formik, Form, Field } from "formik";
+import Router from "next/router";
 import { signIn } from "next-auth/react";
 
-import { auth } from "../utils/async_functions"
+import AuthContext from "@/context/auth/authContext";
 
 interface HomeProps {}
 type FormValues = {
@@ -12,12 +14,26 @@ type FormValues = {
 };
 
 const Home = () => {
+  const authContext = useContext(AuthContext);
+
+  const { login, error, isAuthenticated } = authContext;
   const initialValues = { email: "", password: "" };
+  
+  useEffect(() => {
+      if (isAuthenticated) {
+          Router.push('/dashboard')
+      }
+
+    if (error === 'invalid credentials') {
+        //
+      }
+      //eslint-disable-next-line
+  }, [ error, isAuthenticated ])
 
   const handleFormSubmit = async (formValues: any) => {
     try {
       
-      auth('login', formValues)
+      login(formValues)
 
     } catch (error) {
       console.error("Error during sign up:", error);

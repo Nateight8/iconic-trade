@@ -1,15 +1,22 @@
 "use client";
+import { useContext } from "react";
 
-import { useSession, signOut, signIn } from "next-auth/react";
+// import { useSession, signOut, signIn } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Button } from "../ui/Button";
 import { Rotate as Hamburger } from "hamburger-react";
 
+import AuthContext from "@/context/auth/authContext";
+import Router from "next/router";
+
 type Props = {};
 
 function Navbar({}: Props) {
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, logout } = authContext;
   const navLinks = [
     {
       url: "/",
@@ -28,10 +35,11 @@ function Navbar({}: Props) {
     },
   ];
   const path = usePathname();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const handleSignOut = () => {
-    signOut();
+    logout();
+    Router.push('/sign-in')
   };
 
   const router = useRouter();
@@ -50,7 +58,7 @@ function Navbar({}: Props) {
             </span>
           </Link>
           <div className="md:flex md:order-2 items-center md:space-x-8 hidden">
-            {session ? (
+            {isAuthenticated ? (
               <Button
                 onClick={handleSignOut}
                 style={path === "/sign-up" ? {} : {}}
@@ -67,7 +75,7 @@ function Navbar({}: Props) {
                       : { color: "white" }
                   }
                   onClick={() => {
-                    signIn();
+                    router.push("/sign-in");
                   }}
                   variant="ghost"
                 >
@@ -93,7 +101,7 @@ function Navbar({}: Props) {
             id="navbar-cta"
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-900  border-gray-700">
-              {navLinks.map((alink) => {
+              {isAuthenticated && navLinks.map((alink) => {
                 const { url, link, id } = alink;
 
                 return (

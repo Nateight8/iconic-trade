@@ -7,7 +7,7 @@ import Link from "next/link";
 import { makeRequest } from "../../../../utils/async_functions";
 import { endPoints } from "../../../../utils/urls"
 
-const userSubscriptions = endPoints.userSubscriptions;
+// const userSubscriptions = endPoints.userSubscriptions;
 
 
 type Props = {};
@@ -62,10 +62,10 @@ function Overview({}: Props) {
     return () => clearInterval(intervalId);
   }, []);
 
-  useEffect(() => {
-    const subs = makeRequest(userSubscriptions.link, {}, userSubscriptions.method)
+  // useEffect(() => {
+  //   const subs = makeRequest(userSubscriptions.link, {}, userSubscriptions.method)
     
-  }, []);
+  // }, []);
 
   return (
     <div className="py-5 w-full">
