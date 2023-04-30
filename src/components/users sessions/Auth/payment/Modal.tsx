@@ -1,5 +1,6 @@
-import { investmentLaps } from "@/components/redux/features/packageSlice";
-import { useAppDispatch } from "@/components/redux/store";
+import { useContext } from "react";
+// import { investmentLaps } from "@/redux/features/packageSlice";
+// import { useAppDispatch } from "@/redux/store";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/Label";
 import {
@@ -16,6 +17,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { usePaystackPayment } from "react-paystack";
 
+import subContext from "@/context/subscriptions/subContext";
+
 type Props = {
   handleStep: () => void;
   steps: number;
@@ -23,6 +26,9 @@ type Props = {
 
 function Modal({ steps, handleStep }: Props) {
   const [planChange, setChangeplan] = useState("");
+
+  const SubContext = useContext(subContext);
+  const { verifyPayment } = SubContext;
 
   const handlePlanChange = (selectedValue: string) => {
     setChangeplan(selectedValue);
@@ -54,25 +60,33 @@ function Modal({ steps, handleStep }: Props) {
     amount: "",
   });
 
-  useEffect(() => {
-    initializePayment(
-      () => console.log(data),
-      () => console.log("success")
-    );
-  }, [formValues.amount]);
-
-  const amount = parseInt(formValues.amount);
-  console.log(amount);
+  const newAmount = parseInt(formValues.amount);
+  // console.log(amount);
   const config = {
-    reference: new Date().getTime(),
+    reference: `${new Date().getTime()}`,
     email: "user@example.com",
-    amount: amount * 100,
+    amount: newAmount * 100,
     publicKey: paystackApi,
 
     metadata: {
       plan: formValues.plan,
+      custom_fields:[
+        {
+          display_name:"plan",
+          variable_name:"plan",
+          value:formValues.plan
+        }]
     },
   };
+
+  useEffect(() => {
+    initializePayment(
+      () => {
+        verifyPayment(config)
+      },
+      () => console.log("failed")
+    );
+  }, [formValues.amount]);
 
   const initializePayment = usePaystackPayment(config);
 

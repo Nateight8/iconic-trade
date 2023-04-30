@@ -1,40 +1,44 @@
+import { useContext, useEffect } from "react";
 import LogLayout from "@/components/layout/LogLayout";
 import TextField from "@/components/ui/TextField";
 import validationSchema from "@/components/utils/validationSchema";
 import { Formik, Form, Field } from "formik";
 import Link from "next/link";
+import Router from "next/router";
 import { useState } from "react";
+
+import AuthContext from "@/context/auth/authContext";
 
 interface HomeProps {}
 
 const Home = () => {
+  const authContext = useContext(AuthContext);
+
+  const { register, error, isAuthenticated } = authContext;
+
   const initialValues = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
   };
+  
+  useEffect(() => {
+      if (isAuthenticated) {
+          Router.push('/dashboard')
+      }
+
+    if (error === 'invalid credentials') {
+        //
+      }
+      //eslint-disable-next-line
+  }, [ error, isAuthenticated ])
+
 
   const handleFormSubmit = async (formValues: any) => {
     try {
-      const response = await fetch(
-        "https://iconic-trades-backend.herokuapp.com/api/v1/users/user",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formValues),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        const authToken = data.authToken;
-        localStorage.setItem("sign in token", authToken);
-      } else {
-        console.error("Error during sign up:", response);
-      }
+      register(formValues)
+      
     } catch (error) {
       console.error("Error during sign up:", error);
     }
@@ -45,8 +49,8 @@ const Home = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { resetForm }) => {
-          resetForm();
           handleFormSubmit(values);
+          resetForm();
         }}
         // validationSchema={validationSchema}
       >
