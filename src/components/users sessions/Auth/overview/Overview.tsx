@@ -1,9 +1,12 @@
 import React, { useEffect, useContext } from "react";
 import Panel from "./Panel";
-import { useSelector } from "react-redux";
 import { useAppSelector } from "@/redux/store";
 import Router from "next/router";
 import Link from "next/link";
+
+import { subscriptionType } from "@/types/subscriptions"
+
+import { formatDate, formatAmount } from "@/utils/functions"
 
 import subContext from "@/context/subscriptions/subContext";
 import authContext from "@/context/auth/authContext";
@@ -80,7 +83,38 @@ function Overview({ }: Props) {
 
   return (
     <div className="py-5 w-full">
-      {date === 0 ? (
+      {subscriptions ? (
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th>S/n</th>
+                <th>Plan</th>
+                <th>Status</th>
+                <th>Reference</th>
+                <th>Bank</th>
+                <th>Amount</th>
+                <th>Channel</th>
+                <th>Type</th>
+                <th>Start Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {subscriptions.map((sub: subscriptionType, i: number) => <tr key={i}>
+                <td>{ i + 1 }</td>
+                <td>{ sub.plan }</td>
+                <td>{ sub.status }</td>
+                <td>{ sub.reference }</td>
+                <td>{ sub.bank }</td>
+                <td>{ sub.currency } { `${formatAmount(sub.amount)}` }</td>
+                <td>{ sub.channel }</td>
+                <td>{ sub.card_type }</td>
+                <td>{ formatDate(sub.created_at) }</td>
+              </tr>)}
+            </tbody>
+          </table>
+        </div>
+      ) : date === 0 ? (
         <div className="text-white">
           <p className="max-w-lg mb-6 text-sm text-slate-400">
             You are yet to activate a plan. Go to
