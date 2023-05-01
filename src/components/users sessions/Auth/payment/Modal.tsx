@@ -149,13 +149,13 @@ function Modal({ steps, handleStep }: Props) {
                                       placeholder="Choose a plan"
                                     />
                                     <SelectContent position="popper">
-                                      <SelectItem value="3-m">
+                                      <SelectItem value="3 months">
                                         Three Months
                                       </SelectItem>
-                                      <SelectItem value="6-m">
+                                      <SelectItem value="6 months">
                                         Six Months
                                       </SelectItem>
-                                      <SelectItem value="9-m">
+                                      <SelectItem value="9 months">
                                         Nine Months
                                       </SelectItem>
                                     </SelectContent>
