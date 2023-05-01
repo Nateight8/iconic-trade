@@ -26,8 +26,9 @@ const Home = () => {
 
     if (error === 'invalid credentials') {
         //
-      }
-      //eslint-disable-next-line
+    }
+    
+      // eslint-disable-next-line
   }, [ error, isAuthenticated ])
 
   const handleFormSubmit = async (formValues: any) => {

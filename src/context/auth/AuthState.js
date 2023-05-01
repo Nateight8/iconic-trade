@@ -17,7 +17,7 @@ import setAuthToken from '../../utils/setAuthToken';
 
 const AuthState = props => {
     const initialState = {
-        token: typeof window !== "undefined" && localStorage.getItem('token'),
+        authToken: typeof window !== "undefined" && localStorage.getItem('token'),
         isAuthenticated: null,
         user: null,
         loading: true,
@@ -34,11 +34,11 @@ const AuthState = props => {
         // @todo -load token into global headers
         if (localStorage.token) {
             setAuthToken(localStorage.token)
-        }
 
-        dispatch({
-            type: USER_LOADED
-        })
+            dispatch({
+                type: USER_LOADED
+            })
+        }
     };
     //register user
     const register = async formData => {

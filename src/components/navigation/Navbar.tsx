@@ -82,8 +82,8 @@ function Navbar({}: Props) {
                   Sign in
                 </Button>
                 <Button
-                  style={
-                    path === "/sign-up" ? { color: "#2563eb" } : { color: "" }
+                    style={
+                      { color: "#2563eb" }
                   }
                   onClick={() => {
                     router.push("/sign-up");
