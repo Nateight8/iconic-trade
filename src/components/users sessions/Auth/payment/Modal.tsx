@@ -86,6 +86,7 @@ function Modal({ steps, handleStep }: Props) {
       },
       () => console.log("failed")
     );
+    // eslint-disable-next-line
   }, [formValues.amount]);
 
   const initializePayment = usePaystackPayment(config);

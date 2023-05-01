@@ -25,7 +25,8 @@ function Overview({ }: Props) {
     } else {
       Router.push('/sign-in');
     }
-  }, []);
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
 
   const [remainingTime, setRemainingTime] = React.useState({
     days: 0,
@@ -74,6 +75,7 @@ function Overview({ }: Props) {
     }, 1000);
 
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line
   }, []);
 
   return (

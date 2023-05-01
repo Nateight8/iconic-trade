@@ -5,7 +5,7 @@ import {
     PAYMENT_ERROR
 } from '../types';
 
-export default (state, action) => {
+const subReducer = (state, action) => {
     switch (action.type) {
         case GET_SUBSCRIPTIONS:
             return {
@@ -24,3 +24,5 @@ export default (state, action) => {
             return state
     }
 }
+
+export default subReducer;

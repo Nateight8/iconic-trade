@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
-import Modal from "./Modal";
+// import Modal from "./Modal";
 import Drawer from "./Drawer";
 import { Sheet, SheetTrigger } from "@/components/ui/Sheet";
 
@@ -25,7 +25,7 @@ function Payment({}: Props) {
               //   setopen(true);
               // }}
             >
-              Widraw
+              Withdraw
             </Button>
 
             <SheetTrigger asChild>
