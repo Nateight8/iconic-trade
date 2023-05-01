@@ -4,7 +4,9 @@ import { useAppSelector } from "@/redux/store";
 import Router from "next/router";
 import Link from "next/link";
 
-import {subscriptionType} from "@/types/subscriptions"
+import { subscriptionType } from "@/types/subscriptions"
+
+import { formatDate, formatAmount } from "@/utils/functions"
 
 import subContext from "@/context/subscriptions/subContext";
 import authContext from "@/context/auth/authContext";
@@ -104,10 +106,10 @@ function Overview({ }: Props) {
                 <td>{ sub.status }</td>
                 <td>{ sub.reference }</td>
                 <td>{ sub.bank }</td>
-                <td>{ sub.currency } { `${sub.amount}` }</td>
+                <td>{ sub.currency } { `${formatAmount(sub.amount)}` }</td>
                 <td>{ sub.channel }</td>
                 <td>{ sub.card_type }</td>
-                <td>{ sub.created_at }</td>
+                <td>{ formatDate(sub.created_at) }</td>
               </tr>)}
             </tbody>
           </table>

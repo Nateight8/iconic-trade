@@ -65,7 +65,7 @@ function Modal({ steps, handleStep }: Props) {
   const config = {
     reference: `${new Date().getTime()}`,
     email: "user@example.com",
-    amount: newAmount * 100,
+    amount: newAmount,  
     publicKey: paystackApi,
 
     metadata: {
