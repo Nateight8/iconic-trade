@@ -98,7 +98,7 @@ function Overview({ }: Props) {
               </tr>
             </thead>
             <tbody>
-              {subscriptions.map((sub: subscriptionType, i: number) => <tr>
+              {subscriptions.map((sub: subscriptionType, i: number) => <tr key={i}>
                 <td>{ i + 1 }</td>
                 <td>{ sub.plan }</td>
                 <td>{ sub.status }</td>
