@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import Panel from "./Panel";
 import { useSelector } from "react-redux";
 import { useAppSelector } from "@/redux/store";
+import Router from "next/router";
 import Link from "next/link";
 
 import subContext from "@/context/subscriptions/subContext";
@@ -14,13 +15,18 @@ function Overview({ }: Props) {
   const SubContext = useContext(subContext);
   const AuthContext = useContext(authContext);
 
-  const { loadUser } = AuthContext;
+  const { loadUser, isAuthenticated } = AuthContext;
   const { getSubscriptions, subscriptions } = SubContext;
 
   useEffect(() => {
     loadUser()
-    getSubscriptions();
-  }, []);
+    if (isAuthenticated) {
+      getSubscriptions();
+    } else {
+      Router.push('/sign-in');
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
 
   const [remainingTime, setRemainingTime] = React.useState({
     days: 0,
@@ -69,6 +75,7 @@ function Overview({ }: Props) {
     }, 1000);
 
     return () => clearInterval(intervalId);
+    // eslint-disable-next-line
   }, []);
 
   return (
