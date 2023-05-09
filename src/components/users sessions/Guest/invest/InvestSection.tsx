@@ -38,7 +38,7 @@ const InvestSection = () => {
           <p className=" text-slate-300">
             Don&apos;t go it alone when it comes to investing. At Iconic Trade,
             our team of experts is here to help you make smart investment
-            decisions that lead to long-term growth and financial success.
+            decisions that lead to long-term growth and financial success!
           </p>
         </div>
         <div className="flex flex-col md:flex-row gap-3 my my-6">
