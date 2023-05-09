@@ -13,47 +13,47 @@ const FrequentlyAQ = (props: Props) => {
     {
       id: "1",
       ques: " What is Iconic Trade and how does it work?",
-      answ: "",
+      answ: "Iconic Trade is a globally innovative hedge fund system that provides Investors the opportunity to maximize their Investment returns and achieve their financial goals. We help to maximize your profit through our Long-term strategy with no risk or loss involved during the process of growing your finance",
     },
     {
       id: "2",
       ques: "How do I sign up for an account on Iconic Trade?",
-      answ: "",
+      answ: "To open an account, you must first visit the official website of the project, go to the homepage and click the sign up button. Continue with the ongoing process and your account will be created successfully.",
     },
     {
       id: "3",
       ques: "What are the investment options available on Iconic Trade?",
-      answ: "",
+      answ: "Iconic Trade has various monthly options for you to choose from and this also comes with different prices for you to invest. We hope you enjoy them as all can get you big investment returns. ",
     },
-    {
-      id: "4",
-      ques: " What is Iconic Trade and how does it work?",
-      answ: "",
-    },
-    {
-      id: "5",
-      ques: "How does Iconic Trade ensure the security of my investments?",
-      answ: "",
-    },
+    // {
+    //   id: "4",
+    //   ques: " What is Iconic Trade and how does it work?",
+    //   answ: "",
+    // },
+    // {
+    //   id: "5",
+    //   ques: "How does Iconic Trade ensure the security of my investments?",
+    //   answ: "",
+    // },
     {
       id: "6",
       ques: "How often do I receive returns on my investments?",
-      answ: "",
+      answ: "Investment returns are stated during the process of investing. The return of investment is received at due period. ",
     },
     {
       id: "7",
       ques: "What kind of customer support does Iconic Trade offer?",
       answ: "",
     },
-    {
-      id: "8",
-      ques: "Does Iconic Trade charge any fees for its services?",
-      answ: "",
-    },
+    // {
+    //   id: "8",
+    //   ques: "Does Iconic Trade charge any fees for its services?",
+    //   answ: "",
+    // },
     {
       id: "9",
       ques: "Is Iconic Trade available in my country?",
-      answ: "",
+      answ: "Iconic Trade is a globally innovative scheme that can be attained by people, anywhere and at any time.",
     },
   ];
 
@@ -77,8 +77,7 @@ const FrequentlyAQ = (props: Props) => {
                 {ques}
               </AccordionTrigger>
               <AccordionContent className=" text-slate-300">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor
-                accusamus itaque dignissimos inventore exercitationem sint!
+                <p>{answ}</p>
               </AccordionContent>
             </AccordionItem>
           );
