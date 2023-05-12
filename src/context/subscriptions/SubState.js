@@ -30,6 +30,7 @@ const SubState = props => {
         }
         try {
             const res = await axios.get(userSubscriptionsUrl, config);
+            // console.log(res);
             dispatch({
                 type: GET_SUBSCRIPTIONS,
                 payload: res.data
@@ -38,7 +39,7 @@ const SubState = props => {
         } catch (err) {
             dispatch({
                 type: SUBSCRIPTION_ERROR,
-                payload: err.response.data
+                payload: err
             })
         }
     }

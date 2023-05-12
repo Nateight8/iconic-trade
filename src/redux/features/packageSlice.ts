@@ -18,7 +18,6 @@ const packageSlice = createSlice({
   reducers: {
     investmentLaps: (state, action) => {
       // state.date = action.payload;
-      console.log(action.payload);
     },
     invested: (state) => {
       //   state.investments = [...state.investments, state.date];

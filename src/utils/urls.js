@@ -1,10 +1,11 @@
-const local = 'http://localhost:4000/api/v1';
+const local = 'http://localhost:3000/api/v1';
 const dev = 'https://iconic-trades-backend.herokuapp.com/api/v1';
+const temp = '/api/v1';
 const prod = '';
 
-const current = 'dev';
+const current = 'local';
 
-const inUse = current === 'dev' ? dev : 'local' ? local  : prod;
+const inUse = current === 'dev' ? dev : 'local' ? local : 'temp' ? temp : prod;
 
 export const endPoints = {
   createAccountUrl: `${inUse}/users/user`,

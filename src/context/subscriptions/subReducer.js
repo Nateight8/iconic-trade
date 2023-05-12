@@ -13,7 +13,6 @@ const subReducer = (state, action) => {
                 subscriptions: action.payload
             }
         case SUBSCRIPTION_ERROR:
-        console.log(action.payload);
             return {
                 ...state,
                 error: action.payload
